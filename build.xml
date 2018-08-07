@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="help" name="Sillycat Debian">
+    <target name="clean">
+            <echo message="Cleaning dist, package and modules folders" />
+            <delete dir="${debian.src}" quiet="true" />
+            <delete dir="${build.dir}" quiet="true" />
+            <delete dir="${build.deb}" quiet="true" />
+    </target>
+
+    <target name="package" description="Package .deb file" depends="clean">
+            <mkdir dir="${build.deb}" />
+            <property name="package.name" value="UVCCSS-${product.versionNormal}_${product.version.build}.deb" />
+            <exec executable="fakeroot">
+                <arg value="dpkg" />
+                <arg value="-b" />
+                <arg value="${debian.src}" />
+                <arg value="${build.deb}/${package.name}" />
+            </exec>
+    </target>
+
+    <target name="help">
+        <echo message=" =============================" />
+        <echo message=" Usage: " />
+        <echo message=" ant clean                       removes all the generated resources and classes" />
+        <echo message=" ant dist                        creates a ready-to-be-packaged build folder" />
+        <echo message=" ant package                     creates a DIP installer package" />
+        <echo message="=============================" />
+    </target>
+</project>

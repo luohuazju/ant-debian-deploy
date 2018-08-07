@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+    <debian dir="build/clearsea/DEBIAN" />
+    <debian src="build/clearsea/" />
+    <build dir="build/clearsea/usr/local/lifesize/clearsea/ClearSea" 
+        deb="build-deb">
+    </build>    
+</properties>
