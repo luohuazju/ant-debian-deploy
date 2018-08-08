@@ -1,0 +1,12 @@
+Package: nginx
+Version: 1.11.9
+Section: web
+Priority: optional
+Architecture: all
+Essential: no
+Depends: 
+Pre-Depends:
+Recommends: mozilla | netscape
+Maintainer: Sillycat
+Description: Sillycat Pure Nginx
+

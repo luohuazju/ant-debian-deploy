@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="help" name="Sillycat Debian">
+
+    <property name="build.dir" value="build" />
+    <property name="sys.dir" value="${build.dir}/nginx/etc/init.d" />
+    <property name="debian.dir" value="${build.dir}/nginx/DEBIAN" />
+    <property name="build.deb" value="${build.dir}/build-deb" />
+    <property name="package.name" value="nginx-1.11.9.deb" />
+    <property name="debian.src" value="${build.dir}/nginx" />
+
     <target name="clean">
             <echo message="Cleaning dist, package and modules folders" />
-            <delete dir="${debian.src}" quiet="true" />
             <delete dir="${build.dir}" quiet="true" />
-            <delete dir="${build.deb}" quiet="true" />
     </target>
 
-    <target name="package" description="Package .deb file" depends="clean">
+    <target name="build" depends="clean">
+        <!-- SYSTEM -->
+        <copy todir="${sys.dir}">
+            <fileset dir="debian/sys" />
+        </copy>
+        <!-- DEBIAN -->
+        <copy todir="${debian.dir}">
+            <fileset dir="debian/DEBIAN" />
+        </copy>
+    </target>
+
+    <target name="package" description="Package .deb file" depends="build">
             <mkdir dir="${build.deb}" />
-            <property name="package.name" value="UVCCSS-${product.versionNormal}_${product.version.build}.deb" />
             <exec executable="fakeroot">
                 <arg value="dpkg" />
                 <arg value="-b" />
