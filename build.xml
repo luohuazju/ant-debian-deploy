@@ -25,11 +25,15 @@
         <copy todir="${debian.dir}">
             <fileset dir="debian/DEBIAN" />
         </copy>
-        <chmod file="${debian.dir}/postinst" perm="775"/>
-        <chmod file="${debian.dir}/preinst" perm="775"/>
+        <!-- Application -->
         <mkdir dir="${app.dir}" />
         <gunzip src="${nginx.dist}/nginx-1.11.9-bin.tar.gz" dest="${nginx.dist}"/>
         <untar src="${nginx.dist}/nginx-1.11.9-bin.tar" dest="${app.dir}"/>
+        <!-- Permission -->
+        <chmod file="${debian.dir}/postinst" perm="775"/>
+        <chmod file="${debian.dir}/preinst" perm="775"/>
+        <chmod file="${app.dir}/nginx-1.11.9/sbin/nginx" perm="777"/>
+        <chmod file="${sys.dir}/nginx" perm="777"/>
     </target>
 
     <target name="package" description="Package .deb file" depends="build">
