@@ -4,10 +4,12 @@
     <property name="build.dir" value="build" />
     <property name="sys.dir" value="${build.dir}/nginx/etc/init.d" />
     <property name="debian.dir" value="${build.dir}/nginx/DEBIAN" />
+    <property name="app.dir" value="${build.dir}/nginx/usr/local" />
     <property name="build.deb" value="${build.dir}/build-deb" />
     <property name="package.name" value="nginx-1.11.9.deb" />
     <property name="debian.src" value="${build.dir}/nginx" />
     <property name="build.output.dir" value="dist" />
+    <property name="nginx.dist" value="install" />
 
     <target name="clean">
             <echo message="Cleaning dist, package and modules folders" />
@@ -25,6 +27,9 @@
         </copy>
         <chmod file="${debian.dir}/postinst" perm="775"/>
         <chmod file="${debian.dir}/preinst" perm="775"/>
+        <mkdir dir="${app.dir}" />
+        <gunzip src="${nginx.dist}/nginx-1.11.9-bin.tar.gz" dest="${nginx.dist}"/>
+        <untar src="${nginx.dist}/nginx-1.11.9-bin.tar" dest="${app.dir}"/>
     </target>
 
     <target name="package" description="Package .deb file" depends="build">
