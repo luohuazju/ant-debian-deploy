@@ -7,6 +7,7 @@
     <property name="build.deb" value="${build.dir}/build-deb" />
     <property name="package.name" value="nginx-1.11.9.deb" />
     <property name="debian.src" value="${build.dir}/nginx" />
+    <property name="build.output.dir" value="dist" />
 
     <target name="clean">
             <echo message="Cleaning dist, package and modules folders" />
@@ -22,6 +23,8 @@
         <copy todir="${debian.dir}">
             <fileset dir="debian/DEBIAN" />
         </copy>
+        <chmod file="${debian.dir}/postinst" perm="775"/>
+        <chmod file="${debian.dir}/preinst" perm="775"/>
     </target>
 
     <target name="package" description="Package .deb file" depends="build">
@@ -32,6 +35,14 @@
                 <arg value="${debian.src}" />
                 <arg value="${build.deb}/${package.name}" />
             </exec>
+    </target>
+
+    <target name="release" description="Copy to dist" depends="package">
+        <delete dir="${build.output.dir}" />
+        <mkdir dir="${build.output.dir}" />
+
+        <echo message="Moving ${package.name} to ${build.output.dir}" />
+        <move file="${build.deb}/${package.name}" todir="${build.output.dir}" failonerror="true" />
     </target>
 
     <target name="help">
