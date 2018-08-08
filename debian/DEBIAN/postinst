@@ -2,5 +2,10 @@
 
 if [ -x "/etc/init.d/nginx" ]; then
     update-rc.d nginx defaults >/dev/null
-    /etc/init.d/nginx restart
+    if [ -e /var/run/nginx.pid ]; then 
+        echo "nginx is running, restarting...";         
+        /etc/init.d/nginx restart
+    else
+        /etc/init.d/nginx start
+    fi
 fi
